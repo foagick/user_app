@@ -75,8 +75,8 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   SizedBox(height: 8,),
-                  Text("Product Title"),
-                  Text("\$Price", style: TextStyle(fontWeight: FontWeight(700)),)
+                  Text(product.title, style: TextStyle(fontWeight: FontWeight(700)),),
+                  Text("\$${product.price.toStringAsFixed(2)}", style: TextStyle(fontWeight: FontWeight(700)),)
                 ],
               ),
                         ),

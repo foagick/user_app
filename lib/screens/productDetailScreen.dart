@@ -29,10 +29,10 @@ class _ProductdetailscreenState extends State<Productdetailscreen> {
 
   @override
   Widget build(BuildContext context) {
-    // final product = MarketStore.findProduct(widget.ProductId);
+    final product = MarketStore.findProduct(widget.ProductId);
     return Scaffold(
       appBar: AppBar(
-        // title: Text(product.title),
+        title: Text(product!.title),
         actions: [
           IconButton(onPressed: (){},icon: Icon(Icons.edit)),
           IconButton(onPressed: () {}, icon: Icon(Icons.delete),),
