@@ -1,13 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:user_app/data/market_store.dart';
+import 'package:user_app/screens/productDetailScreen.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+  String price = "Demo String";
+
+
+  void _openDetailScreen({required String ProductId}) async{
+ await Navigator.push(
+  context, 
+  MaterialPageRoute(builder: (context) => Productdetailscreen(ProductId: ProductId)));
+
+  setState(() {
+    
+  });
+  
+}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,9 +40,52 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
         title: Text('User App'), centerTitle: true),
-      body: Center(
-        child: Text('Welcome to the User App!'),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: GridView.builder(
+          itemCount: 6,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            mainAxisSpacing: 10,
+            crossAxisSpacing: 10,
+            childAspectRatio: 0.85,
+            ),
+          itemBuilder: (BuildContext context, int index) {
+            final product = MarketStore.products[index];
+
+            return GestureDetector(
+              onTap: () => _openDetailScreen(ProductId: product.id),
+              child: Container(
+              padding: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                border: Border.all(width: 1, color: Colors.grey.shade300),
+                borderRadius: BorderRadius.circular(10)
+              ),child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(width: 1),
+                        borderRadius: BorderRadius.circular(10),
+                        color: Color.fromARGB(0, 142, 224, 224).withValues(alpha: 0.5)
+                      ),
+                      child: Icon(Icons.headphones, size: 34, color: Color.fromARGB(0, 142, 224, 224),),
+                      
+                    ),
+                  ),
+                  SizedBox(height: 8,),
+                  Text("Product Title"),
+                  Text("\$Price", style: TextStyle(fontWeight: FontWeight(700)),)
+                ],
+              ),
+                        ),
+            );}),
       ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: ()=>{}
+        ),
     );
   }
 }
