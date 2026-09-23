@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'User App',
-        home: const Counterscreen(),
+        home: const HomePage(),
       ),
     );
   }
