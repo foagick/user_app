@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:user_app/bloc/counter_bloc.dart';
 import 'package:user_app/data/categories.dart';
 import 'package:user_app/data/market_store.dart';
-import 'package:user_app/models/product.dart';
+import 'package:user_app/screens/cartScreen.dart';
 import 'package:user_app/screens/productDetailScreen.dart';
 import 'package:user_app/screens/productFormScreen.dart';
 
@@ -15,7 +13,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   void _openDetailScreen({required String productId}) async {
     await Navigator.push(
       context,
@@ -24,17 +21,27 @@ class _HomePageState extends State<HomePage> {
       ),
     );
 
-    setState(() {});
+    if (mounted) setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
+    final cartTotal = MarketStore.cartCount;
     return Scaffold(
       appBar: AppBar(
         actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 8.0),
-            child: Badge(label: Text('3'), child: Icon(Icons.shopping_cart)),
+          IconButton(
+            onPressed: () async {
+              await Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Cartscreen()),
+              );
+              if (mounted) setState(() {});
+            },
+            icon: Badge(
+              label: Text(cartTotal.toString()),
+              child: Icon(Icons.shopping_cart),
+            ),
           ),
         ],
         title: Text('User App'),

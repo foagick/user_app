@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:user_app/bloc/counter_bloc.dart';
+import 'package:user_app/bloc/counter_bloc/counter_bloc.dart';
 
 class Counterscreen extends StatefulWidget {
   const Counterscreen({super.key});
