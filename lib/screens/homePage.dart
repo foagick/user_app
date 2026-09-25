@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:user_app/bloc/counter_bloc.dart';
+import 'package:user_app/data/categories.dart';
 import 'package:user_app/data/market_store.dart';
+import 'package:user_app/models/product.dart';
 import 'package:user_app/screens/productDetailScreen.dart';
+import 'package:user_app/screens/productFormScreen.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -12,13 +15,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String price = "Demo String";
 
-  void _openDetailScreen({required String ProductId}) async {
+  void _openDetailScreen({required String productId}) async {
     await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => Productdetailscreen(ProductId: ProductId),
+        builder: (context) => Productdetailscreen(productId: productId),
       ),
     );
 
@@ -50,9 +52,11 @@ class _HomePageState extends State<HomePage> {
           ),
           itemBuilder: (BuildContext context, int index) {
             final product = MarketStore.products[index];
+            final productIcon = iconForCategory(product.category);
+            final productColor = colorForCategory(product.category);
 
             return GestureDetector(
-              onTap: () => _openDetailScreen(ProductId: product.id),
+              onTap: () => _openDetailScreen(productId: product.id),
               child: Container(
                 padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
@@ -64,6 +68,7 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     Expanded(
                       child: Container(
+                        width: double.infinity,
                         decoration: BoxDecoration(
                           border: Border.all(width: 1),
                           borderRadius: BorderRadius.circular(10),
@@ -75,9 +80,12 @@ class _HomePageState extends State<HomePage> {
                           ).withValues(alpha: 0.5),
                         ),
                         child: Icon(
-                          Icons.headphones,
+                          // iconForCategory(product.category),
+                          productIcon,
                           size: 34,
-                          color: Color.fromARGB(0, 142, 224, 224),
+                          // color: Colors.red,
+                          // color: colorForCategory(product.category),
+                          color: productColor,
                         ),
                       ),
                     ),
@@ -99,7 +107,15 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: () => {},
+        onPressed: () async {
+          await Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ProductFormScreen(productId: null),
+            ),
+          );
+          if (mounted) setState(() {});
+        },
       ),
     );
   }
